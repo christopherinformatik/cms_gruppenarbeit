@@ -1,3 +1,7 @@
+GIT Installation unter Windows
+Auch für Windows gibt es einige Möglichkeiten zur Installation von Git. Eine offizielle Windows-Version findet man direkt auf der Git-Homepage. Gehe dazu auf https://git-scm.com/download/win und der Download sollte dann automatisch starten. Man sollte dabei beachten, dass es sich hierbei um das Projekt „Git for Windows“ handelt, welches unabhängig von Git selbst ist. Weitere Informationen hierzu findest du unter https://msysgit.github.io/.
+Um eine automatisierte Installation zu erhalten, kannst du das Git Chocolatey Paket verwenden. Beachte, dass das Chocolatey-Paket von der Community gepflegt wird.
+
 1. GitHub Repository klonen
 git clone https://github.com/christopherinformatik/cms_gruppenarbeit.git
 cd cms_gruppenarbeit
