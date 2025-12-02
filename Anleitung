@@ -1,3 +1,124 @@
+Anleitung mit Docker
+
+# Projekt Setup – CMS Gruppenarbeit
+
+Diese Anleitung erklärt Schritt für Schritt, wie ihr das Projekt lokal starten könnt, **ohne vorher Node, Strapi oder PostgreSQL zu installieren**. Alles läuft über Docker.
+
+---
+
+## 1️⃣ Voraussetzungen
+
+1. **Docker Desktop installieren**
+   - Windows: https://www.docker.com/products/docker-desktop
+   - macOS: https://www.docker.com/products/docker-desktop
+   - Nach der Installation Docker starten.
+
+2. **Git installieren**
+   - Windows: https://git-scm.com/download/win
+   - macOS: Über Homebrew: `brew install git`
+
+---
+
+## 2️⃣ Repository klonen
+
+Öffnet ein Terminal oder die Eingabeaufforderung und führt aus:
+
+```bash
+git clone https://github.com/christopherinformatik/cms_gruppenarbeit.git
+cd cms_gruppenarbeit
+```
+
+---
+
+## 3️⃣ .env Datei erstellen
+
+Docker und Strapi benötigen bestimmte Secrets.  
+Erstellt eine `.env`-Datei aus der Beispiel-Datei:
+
+```bash
+cp .env.example .env
+```
+
+- Öffnet die `.env`-Datei und füllt die Werte aus. Beispiel:
+
+```
+ADMIN_JWT_SECRET=randomSecret123
+APP_KEYS=randomAppKey_456
+API_TOKEN_SALT=randomSalt_789
+```
+
+> Hinweis: Werte können random sein, müssen nur **einzigartig** sein.
+
+---
+
+## 4️⃣ Docker Compose starten
+
+Alle Container (Backend, Frontend, PostgreSQL) starten mit:
+
+```bash
+docker compose up --build
+```
+
+- Beim ersten Start werden alle Images heruntergeladen und gebaut.  
+- Strapi Backend läuft auf: `http://localhost:1337/admin`  
+- React Frontend läuft auf: `http://localhost:3000`
+
+---
+
+## 5️⃣ Projekt nutzen
+
+- Strapi Backend: Inhalte erstellen, Admin-Benutzer einrichten.  
+- React Frontend: Änderungen testen und entwickeln.  
+
+---
+
+## 6️⃣ Container stoppen
+
+Im Terminal:
+
+```bash
+docker compose down
+```
+
+- Stoppt alle laufenden Container.
+
+---
+
+## 7️⃣ Änderungen speichern
+
+Wenn ihr am Projekt arbeitet und Änderungen habt:
+
+```bash
+git add .
+git commit -m "Beschreibung der Änderungen"
+git push origin main
+```
+
+---
+
+## 8️⃣ Nächster Start
+
+Wenn ihr das Projekt später wieder starten wollt:
+
+```bash
+cd cms_gruppenarbeit
+docker compose up
+```
+
+- Alle Container starten wieder mit denselben Daten.
+
+---
+
+✅ **Hinweise**
+
+- `.env` **nicht ins Repository pushen**, nur `.env.example`.  
+- Docker sorgt dafür, dass **alle Abhängigkeiten enthalten** sind – Node, Strapi, PostgreSQL, React.  
+- Keine Installation von Node oder Strapi auf dem Host nötig.
+
+
+
+
+Anleitung LOKAL auf dem Rechner
 GIT Installation unter Windows
 Auch für Windows gibt es einige Möglichkeiten zur Installation von Git. Eine offizielle Windows-Version findet man direkt auf der Git-Homepage. Gehe dazu auf https://git-scm.com/download/win und der Download sollte dann automatisch starten. Man sollte dabei beachten, dass es sich hierbei um das Projekt „Git for Windows“ handelt, welches unabhängig von Git selbst ist. Weitere Informationen hierzu findest du unter https://msysgit.github.io/.
 Um eine automatisierte Installation zu erhalten, kannst du das Git Chocolatey Paket verwenden. Beachte, dass das Chocolatey-Paket von der Community gepflegt wird.
