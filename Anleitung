@@ -6,6 +6,7 @@ Um eine automatisierte Installation zu erhalten, kannst du das Git Chocolatey Pa
 git clone https://github.com/christopherinformatik/cms_gruppenarbeit.git
 cd cms_gruppenarbeit
 
+Falls kein NPM installiert ist -> https://nodejs.org/en/download
 2. Strapi Backend einrichten
 cd backend
 npm install          # Alle Abhängigkeiten installieren
