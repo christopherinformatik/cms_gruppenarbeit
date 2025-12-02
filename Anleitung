@@ -1,0 +1,18 @@
+1. GitHub Repository klonen
+git clone https://github.com/christopherinformatik/cms_gruppenarbeit.git
+cd cms_gruppenarbeit
+
+2. Strapi Backend einrichten
+cd backend
+npm install          # Alle Abhängigkeiten installieren
+npm run develop      # Strapi Backend starten
+
+3. React Frontend einrichten
+cd cms_gruppenarbeit/frontend
+npm install          # Abhängigkeiten installieren (inkl. Axios)
+npm start            # React Frontend starten
+
+4. Änderungen: 
+git add .
+git commit -m "Beschreibung der Änderung"
+git push origin main
