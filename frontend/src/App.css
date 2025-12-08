@@ -36,3 +36,101 @@
     transform: rotate(360deg);
   }
 }
+
+/* ===== HERO & PRESENTATION STYLES ===== */
+
+.App {
+  text-align: center;
+  background-color: #0f172a;
+  min-height: 100vh;
+  color: #e5e7eb;
+}
+
+.App-main {
+  padding-top: 64px;
+}
+
+/* HERO-BEREICH */
+
+.hero {
+  height: calc(100vh - 64px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 24px;
+  background: radial-gradient(circle at 10% 20%, #111827 0, #020617 40%, #020617 100%);
+}
+
+.hero-inner {
+  max-width: 900px;
+  text-align: center;
+}
+
+.hero-title {
+  font-size: clamp(3rem, 6vw, 4.5rem);
+  margin: 0 0 16px;
+  font-weight: 800;
+  background: linear-gradient(90deg, #60a5fa, #a855f7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-subtitle {
+  margin: 0 0 32px;
+  font-size: 1.25rem;
+  color: #9ca3af;
+}
+
+.hero-badges {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.hero-badge {
+  padding: 10px 26px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #f9fafb;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.6);
+}
+
+.hero-badge-backend {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+}
+
+.hero-badge-frontend {
+  background: linear-gradient(135deg, #22c1c3, #3b82f6);
+}
+
+.hero-plus {
+  color: #e5e7eb;
+  font-weight: 700;
+}
+
+/* Inhalt nach dem Hero */
+
+.content-section {
+  padding: 80px 16px;
+  background: #ffffff;
+  color: #000000;
+}
+
+
+/* ExampleCard grob an das Design anpassen */
+
+.example-card {
+  max-width: 900px;
+  margin: 0 auto 32px;
+  text-align: left;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 32px;
+  color: #111827;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
