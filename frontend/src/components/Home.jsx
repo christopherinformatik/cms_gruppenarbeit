@@ -12,17 +12,10 @@ const Home = () => {
       <section className="content-section" id="home">
         <ExampleCard title="Willkommen">
           <p>
-            Diese Seite ersetzt unsere PowerPoint-Präsentation
-            zu <strong>Strapi &amp; React</strong>.
-          </p>
-          <p>
-            Wenn wir die Inhalte im CMS ändern, aktualisiert sich
-            die Präsentation automatisch.
+            Diese Seite ist noch in Arbeit.
+            Neue Inhalte folgen bald!
           </p>
         </ExampleCard>
-
-        {/* hier könnt ihr später weitere Sections einfügen
-            (z.B. Strapi, React, Synergie, Installation, Team, …) */}
       </section>
     </main>
   );

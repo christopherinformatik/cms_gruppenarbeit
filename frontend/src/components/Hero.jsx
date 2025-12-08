@@ -1,5 +1,6 @@
 // src/components/Hero.jsx
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
   return (
@@ -10,9 +11,13 @@ const Hero = () => {
           Das Power-Duo für moderne Webentwicklung
         </p>
         <div className="hero-badges">
-          <span className="hero-badge hero-badge-backend">Backend</span>
+          <Link to="/backend" className="hero-badge hero-badge-backend">
+            Backend
+          </Link>
           <span className="hero-plus">+</span>
-          <span className="hero-badge hero-badge-frontend">Frontend</span>
+          <Link to="/frontend" className="hero-badge hero-badge-frontend">
+            Frontend
+          </Link>
         </div>
       </div>
     </section>
