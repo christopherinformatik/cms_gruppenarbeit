@@ -10,15 +10,28 @@ import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import TextField from '@mui/material/TextField';
+import Alert from '@mui/material/Alert';
+import CircularProgress from '@mui/material/CircularProgress';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
-const pages = ['Products', 'Pricing', 'Blog'];
+const pages = []; // Removed old pages
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [loginOpen, setLoginOpen] = React.useState(false);
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState('');
+  const [user, setUser] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -33,6 +46,59 @@ function ResponsiveAppBar() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  React.useEffect(() => {
+    try {
+      const saved = localStorage.getItem('currentUser');
+      if (saved) setUser(JSON.parse(saved));
+    } catch (e) {
+      // ignore
+    }
+  }, []);
+
+  const openLogin = () => {
+    setError('');
+    setEmail('');
+    setPassword('');
+    setLoginOpen(true);
+  };
+
+  const closeLogin = () => {
+    setLoginOpen(false);
+  };
+
+  const handleLogin = async () => {
+    setLoading(true);
+    setError('');
+    try {
+      const res = await fetch('http://localhost:1337/api/auth/local', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ identifier: email, password }),
+      });
+      const data = await res.json();
+      if (res.ok && data.jwt) {
+        localStorage.setItem('jwt', data.jwt);
+        localStorage.setItem('currentUser', JSON.stringify(data.user || data));
+        setUser(data.user || data);
+        setLoading(false);
+        setLoginOpen(false);
+      } else {
+        setError((data && data.error && data.error.message) || JSON.stringify(data));
+        setLoading(false);
+      }
+    } catch (e) {
+      setError(String(e));
+      setLoading(false);
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('jwt');
+    localStorage.removeItem('currentUser');
+    setUser(null);
+    handleCloseUserMenu();
   };
 
   return (
@@ -50,7 +116,7 @@ function ResponsiveAppBar() {
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="http://localhost:3000"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -91,11 +157,12 @@ function ResponsiveAppBar() {
               onClose={handleCloseNavMenu}
               sx={{ display: { xs: 'block', md: 'none' } }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem onClick={handleCloseNavMenu} component="a" href="/frontend">
+                <Typography sx={{ textAlign: 'center' }}>Frontend</Typography>
+              </MenuItem>
+              <MenuItem onClick={handleCloseNavMenu} component="a" href="/backend">
+                <Typography sx={{ textAlign: 'center' }}>Backend</Typography>
+              </MenuItem>
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -103,7 +170,7 @@ function ResponsiveAppBar() {
             variant="h5"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="http://localhost:3000"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -118,22 +185,21 @@ function ResponsiveAppBar() {
             LOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
+            <Button href="/frontend" sx={{ my: 2, color: 'white', display: 'block' }}>Frontend</Button>
+            <Button href="/backend" sx={{ my: 2, color: 'white', display: 'block' }}>Backend</Button>
           </Box>
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
+            {!user ? (
+              <Button color="inherit" onClick={openLogin}>Login</Button>
+            ) : (
+              <>
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar alt={user.username || user.email} src="/static/images/avatar/2.jpg" />
+                  </IconButton>
+                </Tooltip>
+              </>
+            )}
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar-user"
@@ -150,17 +216,58 @@ function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
-                </MenuItem>
-              ))}
+              {user ? (
+                <>
+                  <MenuItem onClick={() => { handleCloseUserMenu(); }}>{user.username || user.email}</MenuItem>
+                  <MenuItem onClick={handleLogout}><Typography sx={{ textAlign: 'center' }}>Logout</Typography></MenuItem>
+                </>
+              ) : (
+                settings.map((setting) => (
+                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
+                  </MenuItem>
+                ))
+              )}
             </Menu>
           </Box>
         </Toolbar>
       </Container>
+      {/* Login Dialog */}
+      <Dialog open={loginOpen} onClose={closeLogin}>
+        <DialogTitle>Login</DialogTitle>
+        <DialogContent>
+          {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+          <TextField
+            autoFocus
+            margin="dense"
+            label="E‑Mail"
+            type="email"
+            fullWidth
+            variant="standard"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <TextField
+            margin="dense"
+            label="Passwort"
+            type="password"
+            fullWidth
+            variant="standard"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeLogin} disabled={loading}>Abbrechen</Button>
+          <Button onClick={handleLogin} disabled={loading} variant="contained">
+            {loading ? <CircularProgress size={20} color="inherit" /> : 'Login'}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </AppBar>
   );
 }
 
 export default ResponsiveAppBar;
+
+// Login Dialog component UI rendered alongside AppBar
