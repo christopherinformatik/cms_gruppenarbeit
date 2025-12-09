@@ -1,0 +1,24 @@
+{
+  "schema": {
+    "kind": "collectionType",
+    "collectionName": "comments",
+    "info": {
+      "singularName": "comment",
+      "pluralName": "comments",
+      "displayName": "Comment",
+      "description": "Comments for blog posts"
+    },
+    "options": {
+      "draftAndPublish": false
+    },
+    "attributes": {
+      "name": {
+        "type": "string"
+      },
+      "text": {
+        "type": "text",
+        "required": true
+      }
+    }
+  }
+}

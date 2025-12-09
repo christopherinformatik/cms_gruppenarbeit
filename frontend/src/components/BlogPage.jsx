@@ -1,85 +1,116 @@
-import React, { useState } from 'react';
-import ExampleCard from './ExampleCard';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import React, { useState, useEffect } from "react";
+import { AppBar, Toolbar, Typography, Button, Container, TextField, Card, CardContent, Box } from "@mui/material";
 
-const BlogPage = () => {
-  const [name, setName] = useState('');
-  const [text, setText] = useState('');
-  const [comments, setComments] = useState([]);
+export default function BlogApp() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!text.trim()) return; // leer ignorieren
-
-    const newComment = {
-      id: Date.now(),
-      name: name.trim() || 'Anonym',
-      text: text.trim(),
-      date: new Date().toLocaleString('de-DE'),
+  useEffect(() => {
+    const checkLogin = () => {
+      const token = localStorage.getItem('jwt'); // JWT set by AppBar login
+      const user = localStorage.getItem('currentUser'); // currentUser set by AppBar
+      setIsLoggedIn(!!token && !!user);
     };
 
-    setComments([newComment, ...comments]);
-    setText('');
-    setName('');
+    window.addEventListener('authChanged', checkLogin); // event triggered by AppBar on login/logout
+    checkLogin(); // initial check on mount
+
+    return () => window.removeEventListener('authChanged', checkLogin);
+  }, []);
+
+  const [newPost, setNewPost] = useState("");
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const savedPosts = localStorage.getItem("blog_posts");
+    if (savedPosts) setPosts(JSON.parse(savedPosts));
+  }, []);
+
+  const handleAddPost = () => {
+    if (!newPost.trim()) return;
+
+    let userObj;
+    try {
+      userObj = JSON.parse(localStorage.getItem('currentUser'));
+    } catch {
+      userObj = null;
+    }
+    const currentUser = userObj?.username || 'Unbekannt';
+
+    const updatedPosts = [...posts, { text: newPost, date: new Date().toLocaleString(), author: currentUser }];
+    setPosts(updatedPosts);
+    localStorage.setItem("blog_posts", JSON.stringify(updatedPosts));
+    setNewPost("");
   };
 
   return (
-    <main className="App-main">
-      <section className="content-section">
-        <div className="content-wrapper">
-          <ExampleCard title="📝 Blog & Kommentare">
-            <p>
-              Hier können wir Feedback, Fragen oder Gedanken zu unserer
-              Strapi-&amp;-React-Präsentation sammeln.
-            </p>
-          </ExampleCard>
+    <>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+            Blogseite
+          </Typography>
+          {/* kein Login auf dieser Seite */}
+        </Toolbar>
+      </AppBar>
 
-          <ExampleCard title="💬 Kommentar schreiben">
-            <form onSubmit={handleSubmit}>
-              <TextField
-                label="Name (optional)"
-                variant="standard"
-                fullWidth
-                margin="dense"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              <TextField
-                label="Dein Kommentar"
-                variant="standard"
-                fullWidth
-                margin="dense"
-                multiline
-                minRows={3}
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-              />
-              <div style={{ marginTop: 16, textAlign: 'right' }}>
-                <Button type="submit" variant="contained">
-                  Absenden
-                </Button>
-              </div>
-            </form>
-          </ExampleCard>
+      <Container sx={{ mt: 4 }}>
+        {isLoggedIn && (
+          <Box sx={{ maxWidth: 600, mx: "auto", mb: 4 }}>
+            <Typography variant="h6">Neuen Blogeintrag schreiben</Typography>
+            <TextField
+              fullWidth
+              multiline
+              minRows={3}
+              margin="normal"
+              label="Neuer Eintrag"
+              value={newPost}
+              onChange={(e) => setNewPost(e.target.value)}
+              sx={{ backgroundColor: "white" }}
+            />
+            <Button variant="contained" onClick={handleAddPost}>Veröffentlichen</Button>
+          </Box>
+        )}
 
-          {comments.length > 0 && (
-            <ExampleCard title="📚 Kommentare">
-              {comments.map((c) => (
-                <div key={c.id} style={{ marginBottom: 16 }}>
-                  <strong>{c.name}</strong>{' '}
-                  <span style={{ color: '#6b7280', fontSize: 12 }}>
-                    ({c.date})
-                  </span>
-                  <p style={{ marginTop: 4 }}>{c.text}</p>
-                </div>
-              ))}
-            </ExampleCard>
-          )}
-        </div>
-      </section>
-    </main>
+        <Typography variant="h5" sx={{ mb: 2 }}>Blog-Einträge</Typography>
+        {posts.length === 0 ? (
+          <Typography>Keine Beiträge vorhanden.</Typography>
+        ) : (
+          posts.map((p, index) => (
+            <Card key={index} sx={{ mb: 2 }}>
+              <CardContent>
+                <Typography variant="body1">{p.text}</Typography>
+                <Typography variant="caption" color="text.secondary">
+                  {p.date} - {p.author}
+                </Typography>
+                {isLoggedIn && (() => {
+                  let userObj;
+                  try {
+                    userObj = JSON.parse(localStorage.getItem('currentUser'));
+                  } catch {
+                    userObj = null;
+                  }
+                  const currentUser = userObj?.username || '';
+                  return currentUser === p.author;
+                })() && (
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    size="small"
+                    sx={{ mt: 1 }}
+                    onClick={() => {
+                      const updatedPosts = posts.filter((_, i) => i !== index);
+                      setPosts(updatedPosts);
+                      localStorage.setItem("blog_posts", JSON.stringify(updatedPosts));
+                    }}
+                  >
+                    Löschen
+                  </Button>
+                )}
+              </CardContent>
+            </Card>
+          ))
+        )}
+      </Container>
+    </>
   );
-};
-
-export default BlogPage;
+}

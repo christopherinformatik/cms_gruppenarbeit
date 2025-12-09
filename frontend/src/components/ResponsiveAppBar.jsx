@@ -83,6 +83,8 @@ function ResponsiveAppBar() {
         setUser(data.user || data);
         setLoading(false);
         setLoginOpen(false);
+        // notify other components in same tab that auth changed
+        try { window.dispatchEvent(new Event('authChanged')); } catch (e) {}
       } else {
         setError((data && data.error && data.error.message) || JSON.stringify(data));
         setLoading(false);
@@ -98,6 +100,7 @@ function ResponsiveAppBar() {
     localStorage.removeItem('currentUser');
     setUser(null);
     handleCloseUserMenu();
+    try { window.dispatchEvent(new Event('authChanged')); } catch (e) {}
   };
 
   return (
