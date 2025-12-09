@@ -18,7 +18,6 @@ import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 
 const pages = []; // Removed old pages
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -111,7 +110,6 @@ function ResponsiveAppBar() {
   >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -127,7 +125,9 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            <a href="http://localhost:3000" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+              <img src="/Gemini_Generated_Image_devfcydevfcydevf.png" alt="Logo" style={{ height: 32 }} />
+            </a>
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -169,7 +169,6 @@ function ResponsiveAppBar() {
 
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -186,7 +185,9 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            <a href="http://localhost:3000" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+              <img src="/Gemini_Generated_Image_devfcydevfcydevf.png" alt="Logo" style={{ height: 32 }} />
+            </a>
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <Button href="/frontend" sx={{ my: 2, color: 'white', display: 'block' }}>Frontend</Button>
