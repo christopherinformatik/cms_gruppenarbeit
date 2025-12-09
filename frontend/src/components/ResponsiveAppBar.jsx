@@ -163,6 +163,10 @@ function ResponsiveAppBar() {
               <MenuItem onClick={handleCloseNavMenu} component="a" href="/backend">
                 <Typography sx={{ textAlign: 'center' }}>Backend</Typography>
               </MenuItem>
+              <MenuItem onClick={handleCloseNavMenu} component="a" href="/blog">
+                <Typography sx={{ textAlign: 'center' }}>Blog</Typography>
+              </MenuItem>
+
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -187,6 +191,7 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <Button href="/frontend" sx={{ my: 2, color: 'white', display: 'block' }}>Frontend</Button>
             <Button href="/backend" sx={{ my: 2, color: 'white', display: 'block' }}>Backend</Button>
+            <Button href="/blog" sx={{ my: 2, color: 'white', display: 'block' }}>Blog</Button>
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             {!user ? (

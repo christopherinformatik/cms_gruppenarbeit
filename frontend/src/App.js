@@ -6,6 +6,8 @@ import Footer from './components/Footer';
 import BackendPage from './components/BackendPage';   // ⬅ neu
 import FrontendPage from './components/FrontendPage'; // ⬅ neu
 import { Routes, Route } from 'react-router-dom';     // ⬅ neu
+import BlogPage from './components/BlogPage';
+
 
 function App() {
   return (
@@ -15,6 +17,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/backend" element={<BackendPage />} />
         <Route path="/frontend" element={<FrontendPage />} />
+        <Route path="/blog" element={<BlogPage />} />   {/* ⬅ neu */}
       </Routes>
       <Footer />
     </div>
