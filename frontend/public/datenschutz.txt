@@ -1,0 +1,107 @@
+Datenschutzerklärung (Muster / Testversion)
+
+1. Verantwortlicher
+
+Max Mustermann
+Musterstraße 12
+12345 Musterstadt
+Deutschland
+
+E-Mail: datenschutz@musterfirma.de
+
+Telefon: +49 (0)123 456789
+
+
+
+2. Allgemeines zur Datenverarbeitung
+
+Diese Website befindet sich im Testbetrieb. Personenbezogene Daten werden nur im technisch notwendigen Umfang erhoben. Eine Verarbeitung zu kommerziellen Zwecken findet nicht statt.
+
+3. Erhebung und Speicherung personenbezogener Daten sowie Art und Zweck der Verwendung
+3.1 Beim Besuch der Website
+
+Beim Aufrufen dieser Website werden automatisch Informationen durch den Browser des Endgeräts an den Server gesendet. Dies können u. a. sein:
+
+IP-Adresse (gekürzt oder anonymisiert)
+
+Datum und Uhrzeit des Zugriffs
+
+Browsertyp / Browserversion
+
+Verwendetes Betriebssystem
+
+Referrer-URL
+
+Diese Daten werden ausschließlich zu Test-, Analyse- oder Sicherheitszwecken verarbeitet.
+
+
+
+3.2 Kontaktaufnahme
+
+Wenn Sie uns per E-Mail kontaktieren, werden Ihre Angaben zur Bearbeitung der Anfrage gespeichert. Im Testbetrieb werden diese Daten nicht dauerhaft aufbewahrt.
+
+
+
+4. Weitergabe von Daten
+
+Eine Übermittlung personenbezogener Daten an Dritte findet nicht statt, außer wenn dies:
+
+gesetzlich vorgeschrieben ist,
+
+zur technischen Bereitstellung notwendig ist (z. B. Hosting),
+
+freiwillig im Rahmen von Tests erfolgt.
+
+
+
+5. Cookies
+
+Diese Website kann Cookies verwenden, allerdings ausschließlich für technische Testzwecke (z. B. Session-Cookies). Tracking- oder Marketing-Cookies werden nicht eingesetzt.
+
+
+
+6. Analyse-Tools
+
+Diese Testseite kann interne oder fiktive Analyse-Tools verwenden. Es werden keine Daten zu realen Trackingdiensten übermittelt.
+
+
+
+7. Rechte der betroffenen Personen
+
+Sie haben im Rahmen des Testbetriebs folgende Rechte:
+
+Recht auf Auskunft
+
+Recht auf Berichtigung
+
+Recht auf Löschung
+
+Recht auf Einschränkung der Verarbeitung
+
+Recht auf Widerruf einer Einwilligung (falls relevant)
+
+Hinweis: Diese Rechte bestehen nur formell im Rahmen dieser Mustererklärung und haben keine tatsächliche datenschutzrechtliche Wirkung.
+
+
+
+8. Datensicherheit
+
+Es werden angemessene technische und organisatorische Maßnahmen (TOMs) getroffen, um Daten im Rahmen des Testbetriebs zu schützen.
+
+
+
+9. Hosting
+
+Der technische Betrieb der Seite kann über einen lokalen Rechner oder einen Testserver erfolgen. Im Rahmen des Demonstrationsbetriebs können Log-Dateien anfallen.
+
+
+
+10. Änderungen dieser Datenschutzerklärung
+
+Diese Datenschutzerklärung dient ausschließlich Demonstrationszwecken und kann jederzeit ohne Ankündigung angepasst werden.
+
+
+
+⚠️ Hinweis
+
+Dies ist kein rechtlich gültiges Dokument, sondern ein Muster für Entwicklungsumgebungen (z. B. CMS-Test, Schulungsprojekte, Hochschulprojekte).

@@ -1,3 +1,29 @@
-# https://www.robotstxt.org/robotstxt.html
-User-agent: *
-Disallow:
+Impressum (Testversion / Platzhalter)
+
+Angaben gemäß § 5 TMG
+
+Max Mustermann
+Musterstraße 12
+12345 Musterstadt
+Deutschland
+
+Kontakt
+Telefon: +49 (0)123 456789
+E-Mail: kontakt@musterfirma.de
+
+Vertreten durch:
+Max Mustermann
+
+Umsatzsteuer-ID:
+DE999999999 (Platzhalter)
+
+Inhaltlich verantwortlich gemäß § 18 Abs. 2 MStV:
+Max Mustermann
+Musterstraße 12, 12345 Musterstadt
+
+
+-------------------------------------------------
+
+Hinweis
+
+Dies ist kein gültiges Impressum im rechtlichen Sinne. Es dient ausschließlich zu Test-, Entwicklungs- oder Schulungszwecken.
