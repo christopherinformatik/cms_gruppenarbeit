@@ -129,7 +129,7 @@ function ResponsiveAppBar() {
             }}
           >
             <a href="http://localhost:3000" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
-              <img src="/Gemini_Generated_Image_devfcydevfcydevf.png" alt="Logo" style={{ height: 32 }} />
+              <img src="/S.gif" alt="Logo" style={{ height: 50 }} />
             </a>
           </Typography>
 
@@ -189,7 +189,7 @@ function ResponsiveAppBar() {
             }}
           >
             <a href="http://localhost:3000" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
-              <img src="/Gemini_Generated_Image_devfcydevfcydevf.png" alt="Logo" style={{ height: 32 }} />
+              <img src="/S.gif" alt="Logo" style={{ height: 50 }} />
             </a>
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
