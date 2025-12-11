@@ -19,7 +19,7 @@ import Alert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
 import MenuItem from '@mui/material/MenuItem';
 
-const pages = []; // Removed old pages
+const pages = [];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function ResponsiveAppBar() {
@@ -32,28 +32,16 @@ function ResponsiveAppBar() {
   const [error, setError] = React.useState('');
   const [user, setUser] = React.useState(null);
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+  const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
+  const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
+  const handleCloseNavMenu = () => setAnchorElNav(null);
+  const handleCloseUserMenu = () => setAnchorElUser(null);
 
   React.useEffect(() => {
     try {
       const saved = localStorage.getItem('currentUser');
       if (saved) setUser(JSON.parse(saved));
-    } catch (e) {
-      // ignore
-    }
+    } catch (_) {}
   }, []);
 
   const openLogin = () => {
@@ -63,9 +51,7 @@ function ResponsiveAppBar() {
     setLoginOpen(true);
   };
 
-  const closeLogin = () => {
-    setLoginOpen(false);
-  };
+  const closeLogin = () => setLoginOpen(false);
 
   const handleLogin = async () => {
     setLoading(true);
@@ -77,16 +63,16 @@ function ResponsiveAppBar() {
         body: JSON.stringify({ identifier: email, password }),
       });
       const data = await res.json();
+
       if (res.ok && data.jwt) {
         localStorage.setItem('jwt', data.jwt);
         localStorage.setItem('currentUser', JSON.stringify(data.user || data));
         setUser(data.user || data);
         setLoading(false);
         setLoginOpen(false);
-        // notify other components in same tab that auth changed
-        try { window.dispatchEvent(new Event('authChanged')); } catch (e) {}
+        try { window.dispatchEvent(new Event('authChanged')); } catch (_) {}
       } else {
-        setError((data && data.error && data.error.message) || JSON.stringify(data));
+        setError(data?.error?.message || JSON.stringify(data));
         setLoading(false);
       }
     } catch (e) {
@@ -100,7 +86,7 @@ function ResponsiveAppBar() {
     localStorage.removeItem('currentUser');
     setUser(null);
     handleCloseUserMenu();
-    try { window.dispatchEvent(new Event('authChanged')); } catch (e) {}
+    try { window.dispatchEvent(new Event('authChanged')); } catch (_) {}
   };
 
   return (
@@ -110,9 +96,11 @@ function ResponsiveAppBar() {
         background: 'linear-gradient(135deg, #020617, #111827)',
         boxShadow: 'none'
       }}
-  >
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
+          
+          {/* LOGO */}
           <Typography
             variant="h6"
             noWrap
@@ -128,112 +116,103 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            <a href="http://localhost:3000" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
-              <img src="/S.gif" alt="Logo" style={{ height: 50 }} />
-            </a>
+            <img src="/S.gif" alt="Logo" style={{ height: 50 }} />
           </Typography>
 
+          {/* MOBILE MENU BUTTON */}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
+            <IconButton size="large" onClick={handleOpenNavMenu} color="inherit">
               <MenuIcon />
             </IconButton>
+
+            {/* MOBILE MENU */}
             <Menu
-              id="menu-appbar"
               anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{ display: { xs: 'block', md: 'none' } }}
             >
-              <MenuItem onClick={handleCloseNavMenu} component="a" href="/frontend">
-                <Typography sx={{ textAlign: 'center' }}>Frontend</Typography>
-              </MenuItem>
-              <MenuItem onClick={handleCloseNavMenu} component="a" href="/backend">
-                <Typography sx={{ textAlign: 'center' }}>Backend</Typography>
-              </MenuItem>
-              <MenuItem onClick={handleCloseNavMenu} component="a" href="/blog">
-                <Typography sx={{ textAlign: 'center' }}>Blog</Typography>
+              <MenuItem component="a" href="/frontend" onClick={handleCloseNavMenu}>
+                <Typography>Frontend</Typography>
               </MenuItem>
 
+              <MenuItem component="a" href="/backend" onClick={handleCloseNavMenu}>
+                <Typography>Backend</Typography>
+              </MenuItem>
+
+              <MenuItem component="a" href="/strapi-react" onClick={handleCloseNavMenu}>
+                <Typography>Strapi × React</Typography>
+              </MenuItem>
+
+              <MenuItem component="a" href="/blog" onClick={handleCloseNavMenu}>
+                <Typography>Blog</Typography>
+              </MenuItem>
+
+              {/* ✅ NEW: Installation */}
+              <MenuItem component="a" href="/installation" onClick={handleCloseNavMenu}>
+                <Typography>Installation</Typography>
+              </MenuItem>
+
+              <MenuItem component="a" href="/team">
+                <Typography sx={{ textAlign: 'center' }}>Team</Typography>
+              </MenuItem>
             </Menu>
           </Box>
+
+          {/* MOBILE LOGO */}
           <Typography
             variant="h5"
             noWrap
-            component="a"
-            href="http://localhost:3000"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
               flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
               color: 'inherit',
               textDecoration: 'none',
             }}
           >
-            <a href="http://localhost:3000" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
-              <img src="/S.gif" alt="Logo" style={{ height: 50 }} />
-            </a>
+            <img src="/S.gif" alt="Logo" style={{ height: 50 }} />
           </Typography>
+
+          {/* DESKTOP MENU */}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            <Button href="/frontend" sx={{ my: 2, color: 'white', display: 'block' }}>Frontend</Button>
-            <Button href="/backend" sx={{ my: 2, color: 'white', display: 'block' }}>Backend</Button>
-            <Button href="/blog" sx={{ my: 2, color: 'white', display: 'block' }}>Blog</Button>
+            <Button href="/frontend" sx={{ my: 2, color: 'white' }}>Frontend</Button>
+            <Button href="/backend" sx={{ my: 2, color: 'white' }}>Backend</Button>
+            <Button href="/strapi-react" sx={{ my: 2, color: 'white' }}>Strapi × React</Button>
+            <Button href="/installation" sx={{ my: 2, color: 'white' }}>Installation</Button>
+            <Button href="/team" sx={{ my: 2, color: 'white', display: 'block' }}>Team</Button>
+            <Button href="/blog" sx={{ my: 2, color: 'white' }}>Blog</Button>
           </Box>
+
+          {/* USER / LOGIN */}
           <Box sx={{ flexGrow: 0 }}>
             {!user ? (
               <Button color="inherit" onClick={openLogin}>Login</Button>
             ) : (
               <>
                 <Tooltip title="Open settings">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <IconButton onClick={handleOpenUserMenu}>
                     <Avatar alt={user.username || user.email} src="/static/images/avatar/2.jpg" />
                   </IconButton>
                 </Tooltip>
               </>
             )}
+
             <Menu
               sx={{ mt: '45px' }}
-              id="menu-appbar-user"
               anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
               {user ? (
                 <>
-                  <MenuItem onClick={() => { handleCloseUserMenu(); }}>{user.username || user.email}</MenuItem>
-                  <MenuItem onClick={handleLogout}><Typography sx={{ textAlign: 'center' }}>Logout</Typography></MenuItem>
+                  <MenuItem>{user.username || user.email}</MenuItem>
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </>
               ) : (
-                settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
+                settings.map((s) => (
+                  <MenuItem key={s} onClick={handleCloseUserMenu}>
+                    <Typography>{s}</Typography>
                   </MenuItem>
                 ))
               )}
@@ -241,35 +220,19 @@ function ResponsiveAppBar() {
           </Box>
         </Toolbar>
       </Container>
-      {/* Login Dialog */}
+
+      {/* LOGIN DIALOG */}
       <Dialog open={loginOpen} onClose={closeLogin}>
         <DialogTitle>Login</DialogTitle>
         <DialogContent>
-          {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
-          <TextField
-            autoFocus
-            margin="dense"
-            label="E‑Mail"
-            type="email"
-            fullWidth
-            variant="standard"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <TextField
-            margin="dense"
-            label="Passwort"
-            type="password"
-            fullWidth
-            variant="standard"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          {error && <Alert severity="error">{error}</Alert>}
+          <TextField margin="dense" label="E-Mail" type="email" fullWidth variant="standard" value={email} onChange={(e)=>setEmail(e.target.value)} />
+          <TextField margin="dense" label="Passwort" type="password" fullWidth variant="standard" value={password} onChange={(e)=>setPassword(e.target.value)} />
         </DialogContent>
         <DialogActions>
-          <Button onClick={closeLogin} disabled={loading}>Abbrechen</Button>
-          <Button onClick={handleLogin} disabled={loading} variant="contained">
-            {loading ? <CircularProgress size={20} color="inherit" /> : 'Login'}
+          <Button onClick={closeLogin}>Abbrechen</Button>
+          <Button onClick={handleLogin} variant="contained" disabled={loading}>
+            {loading ? <CircularProgress size={20} /> : 'Login'}
           </Button>
         </DialogActions>
       </Dialog>
@@ -278,5 +241,3 @@ function ResponsiveAppBar() {
 }
 
 export default ResponsiveAppBar;
-
-// Login Dialog component UI rendered alongside AppBar
