@@ -11,7 +11,7 @@ const FrontendPage = () => {
 
           <ExampleCard title="💻 Was ist das Frontend?">
             <p>
-              Das Frontend ist alles, was der Benutzer sieht und womit er direkt
+              Das Frontend ist alles, was der Nutzer sieht und womit er direkt
               interagiert. Es ist die Benutzeroberfläche (UI) und die Art und Weise,
               wie Daten präsentiert werden.
             </p>
